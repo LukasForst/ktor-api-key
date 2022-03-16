@@ -1,21 +1,17 @@
-# Ktor API Key Authentication Provider
+package dev.forst.ktor.apikey
 
-Simple authentication provider for Ktor that verifies presence of the API key in the header. Useful if you want to use `X-Api-Key` or
-similar approaches for request authentication.
+import io.ktor.application.Application
+import io.ktor.application.call
+import io.ktor.application.install
+import io.ktor.auth.Authentication
+import io.ktor.auth.Principal
+import io.ktor.auth.authenticate
+import io.ktor.auth.principal
+import io.ktor.response.respondText
+import io.ktor.routing.get
+import io.ktor.routing.routing
 
-## Installation
 
-Include following in your `build.gradle.kts`:
-
-```kotlin
-implementation("dev.forst", "ktor-api-key", "1.0.0")
-```
-
-## Usage
-
-This is minimal implementation of the Ktor app that uses API Key authentication:
-
-```kotlin
 /**
  * Minimal Ktor application with API Key authentication.
  */
@@ -47,10 +43,3 @@ fun Application.minimalExample() {
         }
     }
 }
-```
-
-For details see [MinimalExampleApp.kt](src/test/kotlin/dev/forst/ktor/apikey/MinimalExampleApp.kt) with this example application
-and [TestMinimalExampleApp.kt](src/test/kotlin/dev/forst/ktor/apikey/TestMinimalExampleApp.kt) which verifies that this app works as  
-expected.
-
-For more advanced configuration see [TestApiKeyAuth.kt](src/test/kotlin/dev/forst/ktor/apikey/TestApiKeyAuth.kt).

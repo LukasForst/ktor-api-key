@@ -15,7 +15,7 @@ import io.ktor.response.respond
 import io.ktor.util.pipeline.PipelineInterceptor
 
 /**
- * Represents a Basic authentication provider.
+ * Represents an API Key authentication provider.
  * @property name is the name of the provider, or `null` for a default provider.
  */
 class ApiKeyAuthenticationProvider internal constructor(
