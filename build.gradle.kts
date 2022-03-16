@@ -27,6 +27,7 @@ dependencies {
     // Ktor server dependencies
     val ktorVersion = "1.6.7"
     compileOnly("io.ktor", "ktor-server-core", ktorVersion)
+    compileOnly("io.ktor", "ktor-auth", ktorVersion)
 
     // testing
     testImplementation("io.ktor", "ktor-server-core", ktorVersion)
@@ -36,16 +37,15 @@ dependencies {
     testImplementation("io.mockk", "mockk", "1.11.0") // mock framework
     testImplementation("ch.qos.logback", "logback-classic", "1.3.0-alpha5") // logging framework for the tests
 
-    val junitVerion = "5.7.2"
-    testImplementation("org.junit.jupiter", "junit-jupiter-api", junitVerion) // junit testing framework
-    testImplementation("org.junit.jupiter", "junit-jupiter-params", junitVerion) // generated parameters for tests
-    testRuntimeOnly("org.junit.jupiter", "junit-jupiter-engine", junitVerion) // testing runtime
+    val junitVersion = "5.7.2"
+    testImplementation("org.junit.jupiter", "junit-jupiter-api", junitVersion) // junit testing framework
+    testImplementation("org.junit.jupiter", "junit-jupiter-params", junitVersion) // generated parameters for tests
+    testRuntimeOnly("org.junit.jupiter", "junit-jupiter-engine", junitVersion) // testing runtime
 }
 
 detekt {
+    config = files("detekt.yml")
     parallel = true
-    input = files("$rootDir/src")
-    config = files(rootDir.resolve("detekt-config.yml"))
 }
 
 tasks {
