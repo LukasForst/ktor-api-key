@@ -1,0 +1,12 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:dev.forst.ktor.apikey////PointingToDeclaration/ktor-api-key/dev.forst.ktor.apikey/index.html
+$dokka.location:dev.forst.ktor.apikey//apiKey/io.ktor.auth.Authentication.Configuration#kotlin.String?#kotlin.Function1[dev.forst.ktor.apikey.ApiKeyAuthenticationProvider.Configuration,kotlin.Unit]/PointingToDeclaration/ktor-api-key/dev.forst.ktor.apikey/api-key.html
+$dokka.location:dev.forst.ktor.apikey/ApiKeyAuthenticationProvider.Configuration///PointingToDeclaration/ktor-api-key/dev.forst.ktor.apikey/-api-key-authentication-provider/-configuration/index.html
+$dokka.location:dev.forst.ktor.apikey/ApiKeyAuthenticationProvider.Configuration/authScheme/#/PointingToDeclaration/ktor-api-key/dev.forst.ktor.apikey/-api-key-authentication-provider/-configuration/auth-scheme.html
+$dokka.location:dev.forst.ktor.apikey/ApiKeyAuthenticationProvider.Configuration/challenge/#kotlin.coroutines.SuspendFunction2[io.ktor.util.pipeline.PipelineContext[io.ktor.auth.AuthenticationProcedureChallenge,io.ktor.application.ApplicationCall],io.ktor.auth.AuthenticationProcedureChallenge,kotlin.Unit]/PointingToDeclaration/ktor-api-key/dev.forst.ktor.apikey/-api-key-authentication-provider/-configuration/challenge.html
+$dokka.location:dev.forst.ktor.apikey/ApiKeyAuthenticationProvider.Configuration/headerName/#/PointingToDeclaration/ktor-api-key/dev.forst.ktor.apikey/-api-key-authentication-provider/-configuration/header-name.html
+$dokka.location:dev.forst.ktor.apikey/ApiKeyAuthenticationProvider.Configuration/validate/#kotlin.coroutines.SuspendFunction2[io.ktor.application.ApplicationCall,kotlin.String,io.ktor.auth.Principal?]/PointingToDeclaration/ktor-api-key/dev.forst.ktor.apikey/-api-key-authentication-provider/-configuration/validate.html
+$dokka.location:dev.forst.ktor.apikey/ApiKeyAuthenticationProvider///PointingToDeclaration/ktor-api-key/dev.forst.ktor.apikey/-api-key-authentication-provider/index.html
+dev.forst.ktor.apikey
+
