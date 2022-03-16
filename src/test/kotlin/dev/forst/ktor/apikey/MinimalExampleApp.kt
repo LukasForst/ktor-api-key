@@ -11,7 +11,6 @@ import io.ktor.response.respondText
 import io.ktor.routing.get
 import io.ktor.routing.routing
 
-
 /**
  * Minimal Ktor application with API Key authentication.
  */
