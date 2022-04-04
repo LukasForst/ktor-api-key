@@ -49,8 +49,6 @@ fun Application.minimalExample() {
 }
 ```
 
-For details see [MinimalExampleApp.kt](src/test/kotlin/dev/forst/ktor/apikey/MinimalExampleApp.kt) with this example application
-and [TestMinimalExampleApp.kt](src/test/kotlin/dev/forst/ktor/apikey/TestMinimalExampleApp.kt) which verifies that this app works as  
-expected.
+For details see [MinimalExampleApp.kt](src/test/kotlin/dev/forst/ktor/apikey/MinimalExampleApp.kt) with this example application and [TestMinimalExampleApp.kt](src/test/kotlin/dev/forst/ktor/apikey/TestMinimalExampleApp.kt) which verifies that this app works as expected.
 
 For more advanced configuration see [TestApiKeyAuth.kt](src/test/kotlin/dev/forst/ktor/apikey/TestApiKeyAuth.kt).
