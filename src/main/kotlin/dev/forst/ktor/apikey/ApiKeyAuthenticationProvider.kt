@@ -10,7 +10,6 @@ import io.ktor.server.auth.Principal
 import io.ktor.server.request.header
 import io.ktor.server.response.respond
 
-
 /**
  * Represents an API Key authentication provider.
  */
