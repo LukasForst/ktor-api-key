@@ -1,42 +1,60 @@
 package dev.forst.ktor.apikey
 
-import io.ktor.application.ApplicationCall
-import io.ktor.application.call
-import io.ktor.auth.Authentication
-import io.ktor.auth.AuthenticationContext
-import io.ktor.auth.AuthenticationFailedCause
-import io.ktor.auth.AuthenticationPipeline
-import io.ktor.auth.AuthenticationProcedureChallenge
-import io.ktor.auth.AuthenticationProvider
-import io.ktor.auth.Principal
 import io.ktor.http.HttpStatusCode
-import io.ktor.request.header
-import io.ktor.response.respond
-import io.ktor.util.pipeline.PipelineInterceptor
+import io.ktor.server.application.ApplicationCall
+import io.ktor.server.auth.AuthenticationConfig
+import io.ktor.server.auth.AuthenticationContext
+import io.ktor.server.auth.AuthenticationFailedCause
+import io.ktor.server.auth.AuthenticationProvider
+import io.ktor.server.auth.Principal
+import io.ktor.server.request.header
+import io.ktor.server.response.respond
+
 
 /**
  * Represents an API Key authentication provider.
- * @property name is the name of the provider, or `null` for a default provider.
  */
 class ApiKeyAuthenticationProvider internal constructor(
     configuration: Configuration
 ) : AuthenticationProvider(configuration) {
-    internal val headerName: String = configuration.headerName
+    private val headerName: String = configuration.headerName
 
-    internal val authenticationFunction = configuration.authenticationFunction
+    private val authenticationFunction = configuration.authenticationFunction
 
-    internal val challengeFunction = configuration.challengeFunction
+    private val challengeFunction = configuration.challengeFunction
 
-    internal val authScheme = configuration.authScheme
+    private val authScheme = configuration.authScheme
+
+    override suspend fun onAuthenticate(context: AuthenticationContext) {
+        val apiKey = context.call.request.header(headerName)
+        val principal = apiKey?.let { authenticationFunction(context.call, it) }
+
+        val cause = when {
+            apiKey == null -> AuthenticationFailedCause.NoCredentials
+            principal == null -> AuthenticationFailedCause.InvalidCredentials
+            else -> null
+        }
+
+        if (cause != null) {
+            context.challenge(authScheme, cause) { challenge, call ->
+                challengeFunction(call)
+
+                challenge.complete()
+            }
+        }
+        if (principal != null) {
+            context.principal(principal)
+        }
+    }
 
     /**
      * Api key auth configuration.
      */
-    class Configuration internal constructor(name: String?) : AuthenticationProvider.Configuration(name) {
+    class Configuration internal constructor(name: String?) : Config(name) {
 
         internal lateinit var authenticationFunction: ApiKeyAuthenticationFunction
 
-        internal var challengeFunction: ApiKeyAuthChallengeFunction = {
+        internal var challengeFunction: ApiKeyAuthChallengeFunction = { call ->
             call.respond(HttpStatusCode.Unauthorized)
         }
 
@@ -70,36 +88,11 @@ class ApiKeyAuthenticationProvider internal constructor(
 /**
  * Installs API Key authentication mechanism.
  */
-fun Authentication.Configuration.apiKey(
+fun AuthenticationConfig.apiKey(
     name: String? = null,
     configure: ApiKeyAuthenticationProvider.Configuration.() -> Unit
 ) {
     val provider = ApiKeyAuthenticationProvider(ApiKeyAuthenticationProvider.Configuration(name).apply(configure))
-    val headerName = provider.headerName
-    val authenticate = provider.authenticationFunction
-    val authScheme = provider.authScheme
-    val challenge = provider.challengeFunction
-
-    provider.pipeline.intercept(AuthenticationPipeline.RequestAuthentication) { context ->
-        val apiKey = call.request.header(headerName)
-        val principal = apiKey?.let { authenticate(call, it) }
-
-        val cause = when {
-            apiKey == null -> AuthenticationFailedCause.NoCredentials
-            principal == null -> AuthenticationFailedCause.InvalidCredentials
-            else -> null
-        }
-        if (cause != null) {
-            context.challenge(authScheme, cause) {
-                challenge.invoke(this, it)
-                it.complete()
-            }
-        }
-        if (principal != null) {
-            context.principal(principal)
-        }
-    }
-
     register(provider)
 }
 
@@ -111,4 +104,4 @@ typealias ApiKeyAuthenticationFunction = suspend ApplicationCall.(String) -> Pri
 /**
  * Alias for function signature that is called when authentication fails.
  */
-typealias ApiKeyAuthChallengeFunction = PipelineInterceptor<AuthenticationProcedureChallenge, ApplicationCall>
+typealias ApiKeyAuthChallengeFunction = suspend (ApplicationCall) -> Unit

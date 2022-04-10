@@ -11,6 +11,8 @@ Include following in your `build.gradle.kts`:
 implementation("dev.forst", "ktor-api-key", "1.0.0")
 ```
 
+Versions >= `1.1.0` have implementation for Ktor >= `2.0.0`, use `1.0.0` if you need support for older versions of Ktor.
+
 ## Usage
 
 This is minimal implementation of the Ktor app that uses API Key authentication:
