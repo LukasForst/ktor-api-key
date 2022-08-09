@@ -3,6 +3,9 @@
 Simple authentication provider for Ktor that verifies presence of the API key in the header. Useful if you want to use `X-Api-Key` or
 similar approaches for request authentication.
 
+## Notice:
+Active development was moved to [LukasForst/ktor-plugins](https://github.com/LukasForst/ktor-plugins/) repository.
+
 ## Installation
 
 Include following in your `build.gradle.kts`:
